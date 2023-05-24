@@ -1,0 +1,47 @@
+       CBL OPT(2)
+       IDENTIFICATION DIVISION.
+    2  PROGRAM-ID.   SPACENUM.
+    3  ENVIRONMENT DIVISION.
+    4  DATA DIVISION.
+      *=========================
+    6  WORKING-STORAGE SECTION.
+    7  01  Demo-Data-Area.
+    8      05 Zoned-Dec          PIC  9(5).
+    9      05 Filler             PIC X(25).
+
+   11  01  Stuff.
+   12      05 Packed-Dec         PIC  9(7) COMP-3.
+   13      05 Packed-Signed      PIC S9(7) COMP-3.
+
+
+   16  LINKAGE SECTION.
+
+   18  PROCEDURE DIVISION.
+   19 *      Move 'A2Z'  to Demo-Data-Area
+   19      Move Spaces to Demo-Data-Area
+   20      Call 'A31BR14' Using Demo-Data-Area
+   21      If Zoned-Dec Numeric
+   22         Display 'Zoned Decimal field is Numeric'
+   23      Else
+   24         Display 'Zoned Decimal field is NOT Numeric'
+   25      End-If
+
+   27      If Zoned-Dec = 0
+   28         Display 'Zoned-Dec is Equal to Zero'
+   29      Else
+   30         Display 'Zoned-Dec is NOT Equal to Zero'
+   31      End-If
+
+   33      Move Zoned-Dec to Packed-Dec
+   34      Display 'Packed-Dec    = ' Packed-Dec
+
+   36      Move Zoned-Dec to Packed-Signed
+   37      Display 'Packed-Signed = ' Packed-Signed
+   38      GOBACK. 
+      * 
+      * Used in Video:  https://youtu.be/7pr07576hZQ
+      *
+      *   Try OPT(2) NUMPROC(NOPFD)  Line 19 Moves Spaces
+      *   Try OPT(1) NUMPROC(NOPFD) Lines 19 Move Spaces
+      *   then change Line 19 to MOVE 'A2Z'   OPT(2 or 0) 
+      
